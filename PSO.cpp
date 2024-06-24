@@ -3,9 +3,13 @@
 #include<random>
 #include<cmath>
 #include<stdlib.h>
-const int n = 50, k = 50, range = 1e8;
-const double lr = 0.4, w = 0.6, c1 = 2, c2 = 2, vmax = 5, inf = 99999999;
+const int n = 100, k = 100, range = 1e8;
+const double lr = 0.4, w = 0.6, c1 = 1.5, c2 = 1.8, vmax = 5, inf = 99999999;
 double z[n];
+
+double myrand(){
+    return (1.0 / range) * (-2 * (rand() % 2) + 1) * (rand() % (range + 1));
+}
 
 struct pair{
     double x, y;
@@ -25,12 +29,20 @@ struct pair{
     }
 
     void limit_speed(){
-        if (std::sqrt(x * x + y * y) > vmax){
-            double res;
-            if (y > x)
-                std::swap(x, y);
-            y = vmax/x * y;
-            x = vmax;
+        if (std::abs(x) > vmax || std::abs(y) > vmax){
+            int scale_factor;
+            if (y < x){
+                scale_factor = x > 0 ? 1 : -1;
+                y = (vmax / x) * y; 
+                x = vmax;
+            }
+            else{
+                scale_factor = y > 0 ? 1 : -1;
+                x = (vmax / y) * x; 
+                y = vmax;
+            }
+            x *= scale_factor;
+            y *= scale_factor;
         }
     }
 
@@ -41,18 +53,16 @@ struct pair{
     void display(){
         printf("(%5.2f, %5.2f)", x, y);
     }
-}pos[n], v[n], pb[n], gb;
 
-double myrand(){
-    return (1.0 / range) * (-2 * (rand() % 2) + 1) * (rand() % (range + 1));
-}
+    void init(int scale){
+        x = myrand() * scale; y = myrand() * scale;
+    }
+}pos[n], v[n], pb[n], gb;
 
 void data_init(){
     for (int i = 0; i < n; ++i){
-        pos[i].x = myrand() * 100;
-        pos[i].y = myrand() * 100;
-        v[i].x = myrand();
-        v[i].y = myrand();
+        pos[i].init(100);
+        v[i].init(1);
     }
 }
 
@@ -93,20 +103,20 @@ void new_record(){
     }
 }
 
-void data_display(int epoch){
+void result_display(int epoch){
     printf("Epoch%d Gb:%.4f Pos:(%.4f,%.4f)\n", epoch, gb.fitness(), gb.x, gb.y);
 }
 
 int main(){
     srand(42);
     data_init();
-    // pair_display(pos); pair_display(v);
-    // printf("%f\n", myrand());
     for (int i = 0; i < k; ++i){
         new_pos();
         new_fitness();
         new_record();
-        data_display(i + 1);
+        result_display(i + 1);
     }
+    //pair_display(pos);
+    //pair_display(v);
     return 0;
 }
