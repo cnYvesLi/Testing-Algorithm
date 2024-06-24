@@ -3,6 +3,6 @@
 Some Algorithm For Machine Learning, Mathematical Modeling
 ## Journal
 ### 2024 Jun24
-Upload the algorithm of Particle Swarm Optimization of 2 dimension.  
+Upload the algorithm Particle Swarm Optimization(2 dimension).  
 File Name: PSO.cpp  
 Language: C++  
