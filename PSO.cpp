@@ -1,6 +1,4 @@
 #include<iostream>
-#include<algorithm>
-#include<random>
 #include<cmath>
 #include<stdlib.h>
 const int n = 100, k = 100, range = 1e8;
