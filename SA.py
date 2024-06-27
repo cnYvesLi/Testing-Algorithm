@@ -38,8 +38,8 @@ class SA:
         for i in range(self.iter):
             f = self.func(self.x[i], self.y[i])
             while True:
-                x_new = self.x[i] + self.T * random.uniform(-0.1, 0.1)
-                y_new = self.y[i] + self.T * random.uniform(-0.1, 0.1)
+                x_new = self.x[i] + self.T * random.uniform(-1, 1)
+                y_new = self.y[i] + self.T * random.uniform(-1, 1)
                 if (self.data_range[0] < x_new < self.data_range[1]) and (self.data_range[0] < y_new < self.data_range[1]):
                     break
             # print(self.x[i], x_new, self.y[i], y_new)
