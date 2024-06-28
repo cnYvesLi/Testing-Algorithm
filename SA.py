@@ -52,7 +52,7 @@ class SA:
         val = float("inf")
         idx = 0
         for i in range(self.iter):
-            new_val = func(self.x[i], self.y[i])
+            new_val = self.func(self.x[i], self.y[i])
             if new_val < val:
                 val = new_val
                 idx = i
